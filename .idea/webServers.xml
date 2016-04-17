@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4d4e9042-7ea9-45fb-83ca-f3a80a8c2bda" name="RaspberryPi" url="http://169.254.0.3">
+        <fileTransfer host="169.254.0.3" port="22" accessType="SFTP" username="pi">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="c315d485-8f59-4401-9146-b1fe25d14f0e" name="weaved-pi" url="http://proxy54.yoics.net">
+        <fileTransfer host="proxy54.yoics.net" port="31053" accessType="SFTP" username="pi">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="31053" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
