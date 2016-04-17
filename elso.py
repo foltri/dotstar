@@ -34,11 +34,10 @@ playerPixelRange = numpixels // numplayers
 # the DotStar_Emulator import
 import sys
 
-# try:
-from dotstar import Adafruit_DotStar
-
-# except ImportError:
-#     from DotStar_Emulator import Adafruit_DotStar
+try:
+    from dotstar import Adafruit_DotStar
+except ImportError:
+    from DotStar_Emulator import Adafruit_DotStar
 # End of DotStar_Emulator Changed Code
 # ##################################################
 
@@ -68,27 +67,8 @@ strip.setBrightness(BRIGHTNESS)  # Limit brightness to ~1/4 duty cycle
 # Runs 10 LEDs at a time along strip, cycling through red, green and blue.
 # This requires about 200 mA for all the 'on' pixels + 1 mA per 'off' pixel.
 
-
-
-
-# def setBackground(color):
-#
-#     full_circle = False
-#     head = 0
-#     while not full_circle:
-#         strip.setPixelColor(head, colorRangeRand(color,100))  # Turn on 'head' pixel
-#         strip.show()  # Refresh strip
-#         time.sleep(1.0 / 50)  # Pause 20 milliseconds (~50 fps)
-#
-#         head += 1  # Advance head position
-#         if head >= numpixels:  # Off end of strip?
-#             head = 0  # Reset to start
-#             full_circle = True
-#     return
-
-
 def setBackground(color):
-    setPixelRange(0, numpixels, color, delay=10)
+    setPixelRange([0], numpixels, color, delay=10)
     return
 
 
@@ -115,54 +95,7 @@ def getPlayerStartLed(player):
     return playerPixelRange * (player - 1)
 
 
-def setPixelRange(start, length, color, delay=0):
-    for p in range(length):
-        strip.setPixelColor(start + p, color)
-        if delay > 0:
-            time.sleep(delay / 1000)
-            strip.show()
-    if delay == 0:
-        strip.show()
-
-
-def setPixelRange2(start, length, color, delay=0, type='fromStart'):
-    if type == 'fromStart':
-        for p in range(length):
-            strip.setPixelColor(start + p, color)
-            if delay > 0:
-                setDelay(delay)
-                strip.show()
-
-    elif type == 'fromEnd':
-        for p in range(length, 0, -1):
-            strip.setPixelColor(start + p - 1, color)
-            if delay > 0:
-                setDelay(delay)
-                strip.show()
-
-    elif type == 'fromCenter':
-        if delay == 0: raise Exception("For type: 'fromCenter' you need to set a higher delay than 0.")
-        index = length // 2
-        for i in range(index):
-            strip.setPixelColor(start + index + i, color)
-            strip.setPixelColor(start + index - i - 1, color)
-            setDelay(delay)
-            strip.show()
-
-    elif type == 'fromEnds':
-        if delay == 0: raise Exception("For type: 'fromEnds' you need to set a higher delay than 0.")
-        index = length // 2
-        for i in range(index):
-            strip.setPixelColor(start + i, color)
-            strip.setPixelColor(start + length - i - 1, color)
-            setDelay(delay)
-            strip.show()
-
-    if delay == 0:
-        strip.show()
-
-
-def setPixelRange3(starts, length, color, delay=0, type='fromStart'):
+def setPixelRange(starts, length, color, delay=0, type='fromStart'):
 
     if type == 'fromStart':
         for p in range(length):
@@ -202,7 +135,6 @@ def setPixelRange3(starts, length, color, delay=0, type='fromStart'):
                 setDelay(delay)
                 strip.show()
 
-
     if delay == 0:
         strip.show()
 
@@ -214,11 +146,11 @@ def gunShot(player):
         start = getPlayerStartLed(player)
 
         if shotColor < 0xff0000:
-            setPixelRange(start, playerPixelRange, shotColor)
+            setPixelRange([start], playerPixelRange, shotColor)
             time.sleep(10 / 1000)
         else:
             time.sleep(50 / 1000)
-            setPixelRange(start, playerPixelRange, bgColor)
+            setPixelRange([start], playerPixelRange, bgColor)
             break
 
 
@@ -229,9 +161,9 @@ def gunShot2(player):
     flash()
     setDelay(40)
 
-    setPixelRange2(start, playerPixelRange, bloodColor, delay=7, type='fromCenter')
+    setPixelRange([start], playerPixelRange, bloodColor, delay=7, type='fromCenter')
     setDelay(200)
-    setPixelRange2(start, playerPixelRange, bgColor, delay=7, type='fromEnds')
+    setPixelRange([start], playerPixelRange, bgColor, delay=7, type='fromEnds')
     return
 
 def gGunShot2(player):
@@ -246,9 +178,9 @@ def gGunShot2(player):
     setDelay(40)
 
 
-    setPixelRange3(starts, playerPixelRange, bloodColor, delay=7, type='fromCenter')
+    setPixelRange(starts, playerPixelRange, bloodColor, delay=7, type='fromCenter')
     setDelay(200)
-    setPixelRange3(starts, playerPixelRange, bgColor, delay=7, type='fromEnds')
+    setPixelRange(starts, playerPixelRange, bgColor, delay=7, type='fromEnds')
 
     return
 
@@ -264,11 +196,11 @@ def gGunShot(player):
                 start = getPlayerStartLed(player)
 
                 if shotColor < 0xff0000:
-                    setPixelRange(start, playerPixelRange, shotColor)
+                    setPixelRange([start], playerPixelRange, shotColor)
                     time.sleep(10 / 1000)
                 else:
                     time.sleep(50 / 1000)
-                    setPixelRange(start, playerPixelRange, bgColor)
+                    setPixelRange([start], playerPixelRange, bgColor)
                     break
 
 
@@ -277,10 +209,10 @@ def arrowShot():
 
     start = playerPixelRange * random.randint(0, 2) + playerPixelRange // 2
 
-    setPixelRange(start, playerPixelRange, indianColor)
+    setPixelRange([start], playerPixelRange, indianColor)
     setDelay(1000)
 
-    setPixelRange(start, playerPixelRange, bgColor)
+    setPixelRange([start], playerPixelRange, bgColor)
 
 
 
