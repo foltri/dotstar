@@ -1,7 +1,7 @@
 from socket import socket, gethostbyname, AF_INET, SOCK_DGRAM
 import sys
 
-PORT_NUMBER = 5001
+PORT_NUMBER = 5000
 SIZE = 1024
 
 hostName = gethostbyname('0.0.0.0')
@@ -18,7 +18,7 @@ def receive():
 
 
 def close():
-    sys.ext()
+    sys.exit()
 
 # while True:
 #         (data,addr) = mySocket.recvfrom(SIZE)
