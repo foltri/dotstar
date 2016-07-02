@@ -1,5 +1,4 @@
 IS_EMULATOR   = False
-DEFAULT_COLOR = 0xec6100
 
 
 try:
@@ -10,6 +9,7 @@ except ImportError:
 
 #------------------------------------------------------------------------------#
 class Strip(object):
+    DEFAULT_COLOR      = 0xec6100
     BRIGHTNESS         = 200
     NUMPIXELS          = 144  # Number of LEDs in strip
     NUMPLAYERS         = 4
@@ -19,9 +19,9 @@ class Strip(object):
     _DATAPIN  = 23
     _CLOCKPIN = 24
 
+
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def __init__(self):
-        self._leds = [DEFAULT_COLOR for x in range(self.NUMPIXELS)]  # colors
         self._brightness = 64
 
         if IS_EMULATOR:
@@ -40,28 +40,23 @@ class Strip(object):
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    def set_color(self, pos, color):
-        self._leds[pos] = color
+    def set_color(self, pos, r, g=None, b=None):
+        if (g is not None and
+            b is not None):
+                self.strip.setPixelColor(pos, r, g, b)
+        else:
+            self.strip.setPixelColor(pos, r)
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def set_color_range(self, start, end, color):
         for i in range(start, end):
-            self.set_color(i, color)
-
-    # def set_color(self, pos, r, g, b):
-    #     color = r << 16 | g << 8 | b
-    #     self.set_color(pos, color)
+            self.strip.setPixelColor(i, color)
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def set_brightness(self, brightness):
-        self._brightness = brightness
-
-
-    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    def update(self):
-        for pos, led in enumerate(self._leds):
-            self.strip.setPixelColor(pos, led)
-        self.strip.setBrightness(self._brightness)
+        self.strip.setBrightness(brightness)
         self.strip.show()
+
+

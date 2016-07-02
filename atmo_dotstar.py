@@ -202,7 +202,7 @@ def gunShot(player):
     bloodColor = 0xff0000
     start = getPlayerStartLed(player)
 
-    os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
+    # os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
     setDelay(50)
     flash()
     setDelay(100)

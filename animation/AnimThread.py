@@ -1,37 +1,53 @@
 from threading import Thread
-
+from Queue import Queue
 import time
 
-from animation import Strip
+from animation.Strip import Strip
 
 
 class AnimThread:
-    strip = Strip.Strip()
+    strip = Strip()
 
     def __init__(self):
         self.is_running = True
-        self.animations = []
+        self.animations = Queue()
 
     def start(self):
         Thread(target=self.update, args=()).start()
-        return self
 
     def stop(self):
         self.is_running = False
 
     def update(self):
         while self.is_running:
-            for anim in self.animations:  # sorted, new entries override buffer
-                anim.tick()
 
-            # update physical strip
-            if self.animations:
-                self.strip.update()
+            # default bg
+            AnimThread.strip.set_color_range(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
+            if self.animations.empty():
+                AnimThread.strip.strip.show()
+            else:
+                print(self.animations.qsize())
 
-            # deletes old entries, I hope it remains sorted
-            self.animations = [item for item in self.animations if not item.is_finished]
+            new_animations = Queue()
+            while not self.animations.empty():
+                anim = self.animations.get()
 
-            time.sleep(30/1000)
+                if not anim.is_finished:
+                    anim.tick()
+                    new_animations.put(anim)
+
+            self.animations = new_animations
+
+            time.sleep(20 / 1000)
 
     def add(self, anim):
-        self.animations.append(anim)
+        self.animations.put(anim)
+
+    def remove(self, param):
+        new_animations = Queue()
+        while not self.animations.empty():
+            anim = self.animations.get()
+            if not isinstance(anim, param):
+                new_animations.put(anim)
+
+        self.animations = new_animations
