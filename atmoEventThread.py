@@ -9,12 +9,12 @@ class AtmoEventStream:
         # from the stream
         self.stream = server
 
-        self.message = self.stream.receive()
+        # self.message = self.stream.receive()
 
         # initialize the variable used to indicate if the thread should
         # be stopped
         self.stopped = False
-        self.unread = True
+        self.unread = False
 
     def start(self):
         # start the thread to read frames from the video stream

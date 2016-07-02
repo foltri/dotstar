@@ -1,13 +1,13 @@
 class Animation(object):
     def __init__(self, dur):
         self.duration = dur
-        self.progress = dur
+        self.progress = 0
         self.is_finished = False
 
     def tick(self):
-        if self.progress > 0:
+        if self.progress < self.duration:
             self.animate()
-            self.progress -= 1
+            self.progress += 1
         else:
             self.is_finished = True
 
