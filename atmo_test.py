@@ -23,8 +23,8 @@ while True:
 
     for event in pygame.event.get(): # nem mukodik, mert alakad a receive-nel!!
 
-        if event.type == MOUSEMOTION:
-            pass
+        # if event.type == MOUSEMOTION:
+        #     pass
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_1:
@@ -48,8 +48,8 @@ while True:
             if event.key == pygame.K_a:
                 atmo_dotstar.arrowShot()
 
-            if event.key == pygame.K_z:
-                atmo_dotstar.random()
+            # if event.key == pygame.K_z:
+            #     atmo_dotstar.random()
 
             if event.key == pygame.K_c:
                 atmo_dotstar.beerDrink(3)

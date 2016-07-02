@@ -5,10 +5,10 @@ import time
 import random
 import numpy
 
-try:
-    from dotstar import Adafruit_DotStar
-except ImportError:
-    from DotStar_Emulator import Adafruit_DotStar
+# try:
+#     from dotstar import Adafruit_DotStar
+# except ImportError:
+from DotStar_Emulator import Adafruit_DotStar
 
 bgColor = 0xD68411  # 'On' color (starts red)
 bgColor = 0xD17A00
@@ -25,11 +25,13 @@ playerPixelRange = numpixels // numplayers
 # Here's how to control the strip from any two GPIO pins:
 datapin = 23
 clockpin = 24
-strip = Adafruit_DotStar(numpixels, datapin, clockpin, order='bgr')
+strip = Adafruit_DotStar(numpixels, datapin, clockpin) # , order='bgr'
+
 
 def setBackground(color, delay=10):
     setPixelRange([0], numpixels, color, delay=delay)
     return
+
 
 def flash():
     strip.setBrightness(50)
@@ -58,7 +60,6 @@ def getPlayerStartLed(player):
 
 
 def setPixelRange(starts, length, color, delay=0, type='fromStart'):
-
     if type == 'fromStart':
         for p in range(length):
             for start in starts:
@@ -96,7 +97,6 @@ def setPixelRange(starts, length, color, delay=0, type='fromStart'):
                 elif pos2 < 0:
                     pos2 += (numpixels - 1)
 
-
                 strip.setPixelColor(pos1, color)
                 strip.setPixelColor(pos2, color)
             if delay > 0:
@@ -120,7 +120,6 @@ def setPixelRange(starts, length, color, delay=0, type='fromStart'):
                 elif pos2 < 0:
                     pos2 += (numpixels - 1)
 
-
                 strip.setPixelColor(pos1, color)
                 strip.setPixelColor(pos2, color)
             if delay > 0:
@@ -132,12 +131,12 @@ def setPixelRange(starts, length, color, delay=0, type='fromStart'):
 
 
 def gunShot2(player):
-    shotColor = bgColor # 0xdf6c00
+    shotColor = bgColor  # 0xdf6c00
     start = getPlayerStartLed(player)
     on = True
     state = 0
     while on:
-        print(format(shotColor,'02x'))
+        print(format(shotColor, '02x'))
         if state == 0:
             shotColor -= 0x000500
             setPixelRange([start], playerPixelRange, shotColor)
@@ -162,16 +161,20 @@ def gunShot2(player):
             setDelay(20)
     return
 
+
 def getRed(color):
     return color & 0xff0000
+
 
 def getGreen(color):
     return color & 0x00ff00
 
+
 def getBlue(color):
     return color & 0x0000ff
 
-def setRGB(red,green,blue):
+
+def setRGB(red, green, blue):
     r = hex(red).split('x')[1]
     if len(r) == 1: r = '0' + r
     g = hex(green).split('x')[1]
@@ -179,6 +182,7 @@ def setRGB(red,green,blue):
     b = hex(blue).split('x')[1]
     if len(b) == 1: b = '0' + b
     return int(r + g + b, 16)
+
 
 # def setRed(color, red):
 #     tmp1 = color & 0xff0000
@@ -208,6 +212,7 @@ def gunShot(player):
     setPixelRange([start], playerPixelRange, bgColor, delay=90, type='fromEnds')
     return
 
+
 def gGunShot(player):
     bloodColor = 0xff0000
     starts = []
@@ -224,7 +229,6 @@ def gGunShot(player):
     os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
     flash()
     setDelay(200)
-
 
     setPixelRange(starts, playerPixelRange, bloodColor, delay=5, type='fromCenter')
     setDelay(300)
@@ -274,11 +278,12 @@ def arrowShot(player):
     setPixelRange([start], playerPixelRange, indianColor, delay=15, type='fromCenter')
     setDelay(1500)
 
-    setPixelRange([start], playerPixelRange, bgColor,delay=15,type='fromEnds')
+    setPixelRange([start], playerPixelRange, bgColor, delay=15, type='fromEnds')
+
 
 def beerDrink(player):
-    beerColor = setRGB(19,8,0)
-        # setRGB(236,97,0)
+    beerColor = setRGB(19, 8, 0)
+    # setRGB(236,97,0)
     # 0xec6100
 
     # p = player + 1
@@ -299,13 +304,14 @@ def beerDrink(player):
     os.system('mpg123 -q testimages/beer_wood.mp3 &')
     return
 
-def tntEffect():
-    r = 236 #getRed(bgColor)     #236
-    g = 97 #getGreen(bgColor)   #97
-    b = 0 #getBlue(bgColor)    #0
 
-    for x in range(0,numpixels):           # (int x = 8; x < 99; x++)
-        flicker = random.randint(0, 8)    #16)             # random(0, 150);
+def tntEffect():
+    r = 236  # getRed(bgColor)     #236
+    g = 97  # getGreen(bgColor)   #97
+    b = 0  # getBlue(bgColor)    #0
+
+    for x in range(0, numpixels):  # (int x = 8; x < 99; x++)
+        flicker = random.randint(0, 8)  # 16)             # random(0, 150);
         if flicker == 0:
             r1 = 0
             g1 = 0
@@ -327,17 +333,22 @@ def tntEffect():
     strip.show()
     setDelay(random.randint(50, 120))
 
-def random1():
 
+def random1():
     for cicle in range(10):
-        brs = numpy.random.rand(numpixels,1)
+        brs = numpy.random.rand(numpixels, 1)
         print(len(brs))
 
         for i, br in enumerate(brs):
             r = int(getRed(bgColor) * br)
             g = int(getGreen(bgColor) * br)
             b = int(getBlue(bgColor) * br)
-            strip.setPixelColor(i,setRGB(r,g,b))
+            strip.setPixelColor(i, setRGB(r, g, b))
 
         strip.show()
         setDelay(500)
+
+
+while True:
+    random1()
+    time.sleep(1)
