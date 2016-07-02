@@ -1,9 +1,25 @@
+
+#------------------------------------------------------------------------------#
 class Animation(object):
-    def __init__(self, dur):
-        self.duration = dur
-        self.progress = 0
+
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+    @property
+    def is_finished(self):
+        return self._is_finished
+
+    @is_finished.setter
+    def is_finished(self, value):
+        self._is_finished = value
+
+
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+    def __init__(self, duration):
+        self.duration    = duration
+        self.progress    = 0
         self.is_finished = False
 
+
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def tick(self):
         if self.duration == -1 or self.progress < self.duration:
             self.animate()
@@ -11,9 +27,8 @@ class Animation(object):
         else:
             self.is_finished = True
 
-    def is_finished(self):
-        return self.is_finished
 
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     # override this to do the animation
     def animate(self):
         pass
