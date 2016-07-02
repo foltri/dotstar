@@ -61,3 +61,4 @@ class ShotAnim(Animation):
 
         if 50 + 20 + 20 + 100 + radius * 5 + 400 + radius * 90 < self.progress:
             self.is_finished = True
+            # TODO: NEVER REACHED - 'cause return
