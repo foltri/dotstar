@@ -1,24 +1,18 @@
 import os
 
-import sys
-
-from animation import *
-from animation import AnimThread
-import pygame
-from pygame.locals import *
 import atmoEventThread
+from animation import AnimThread
 # import server
-from animation.BeerAnim import BeerAnim
-from animation.TestAnim import TestAnim
+from animation.ShotAnim import ShotAnim
 
 # needs connection
 
-a = atmoEventThread.AtmoEventStream()
-a.start()
+# a = atmoEventThread.AtmoEventStream()
+# a.start()
 
 at = AnimThread.AnimThread()
 at.start()
-at.add(TestAnim(1))
+at.add(ShotAnim(1))
 
 exit = False
 
@@ -28,11 +22,11 @@ exit = False
 try:
     while True:
         m = a.read()
-        print(m)
-        if m == 'test':
-            at.add(TestAnim(1))
-            #     if m == 'shot1':
-            #         atmo_dotstar.gunShot(3)
+        if m:
+            print(m)
+        if m == 'shot1':
+            at.add(ShotAnim(1))
+            # atmo_dotstar.gunShot(3)
             #     elif m == 'gatling':
             #         atmo_dotstar.gGunShot(3)
             #

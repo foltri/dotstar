@@ -31,7 +31,7 @@ class AnimThread:
             # deletes old entries, I hope it remains sorted
             self.animations = [item for item in self.animations if not item.is_finished]
 
-            time.sleep(100/1000)
+            time.sleep(30/1000)
 
     def add(self, anim):
         self.animations.append(anim)

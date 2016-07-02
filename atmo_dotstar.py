@@ -5,10 +5,10 @@ import time
 import random
 import numpy
 
-try:
-    from dotstar import Adafruit_DotStar
-except ImportError:
-    from DotStar_Emulator import Adafruit_DotStar
+# try:
+#     from dotstar import Adafruit_DotStar
+# except ImportError:
+from DotStar_Emulator import Adafruit_DotStar
 
 bgColor = 0xD68411  # 'On' color (starts red)
 bgColor = 0xD17A00

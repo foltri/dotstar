@@ -5,7 +5,7 @@ class Animation(object):
         self.is_finished = False
 
     def tick(self):
-        if self.progress < self.duration:
+        if self.duration == -1 or self.progress < self.duration:
             self.animate()
             self.progress += 1
         else:

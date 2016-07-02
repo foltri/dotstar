@@ -7,6 +7,7 @@ except ImportError:
 
 
 class Strip(object):
+    brightness = 200
     numpixels = 144  # Number of LEDs in strip
     numplayers = 4
     playerPixelRange = numpixels // numplayers
@@ -16,7 +17,7 @@ class Strip(object):
     clockpin = 24
 
     def __init__(self):
-        self._leds = [0x00ff00 for x in range(self.numpixels)]  # colors
+        self._leds = [0xec6100 for x in range(self.numpixels)]  # colors
         self._brightness = 64
 
         if not is_emulator:
