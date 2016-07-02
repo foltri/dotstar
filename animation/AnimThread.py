@@ -1,5 +1,5 @@
 from threading import Thread
-from Queue import Queue
+from Queue import Queue, Empty
 import time
 
 from animation.Strip import Strip
@@ -29,13 +29,15 @@ class AnimThread:
                 print(self.animations.qsize())
 
             new_animations = Queue()
-            while not self.animations.empty():
-                anim = self.animations.get()
+            while True:
+                try:
+                    anim = self.animations.get(block=False)
 
-                if not anim.is_finished:
-                    anim.tick()
-                    new_animations.put(anim)
-
+                    if not anim.is_finished:
+                        anim.tick()
+                        new_animations.put(anim)
+                except Empty:
+                    break
             self.animations = new_animations
 
             time.sleep(20 / 1000)
@@ -49,5 +51,7 @@ class AnimThread:
             anim = self.animations.get()
             if not isinstance(anim, param):
                 new_animations.put(anim)
+            else:
+                anim.on_remove()
 
         self.animations = new_animations

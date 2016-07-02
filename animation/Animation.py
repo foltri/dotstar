@@ -32,3 +32,7 @@ class Animation(object):
     # override this to do the animation
     def animate(self):
         pass
+
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+    def on_remove(self):
+        pass

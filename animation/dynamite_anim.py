@@ -14,9 +14,9 @@ class DynamiteAnim(Animation):
         self.next_time = random.randint(50, 120)
 
     def animate(self):
-        if self.progress % 4100 == 0:
-            # subprocess.call(["mpg123", "-q", "testimages/tnt2.mp3"])
-            pass
+        if self.progress % 2420 == 0:
+            subprocess.Popen(["mpg123", "-q", "testimages/tnt2.mp3"])
+
         r = 236  # getRed(bgColor)     #236
         g = 97  # getGreen(bgColor)   #97
         b = 0  # getBlue(bgColor)    #0
@@ -46,4 +46,4 @@ class DynamiteAnim(Animation):
             self.next_time = self.progress + random.randint(50, 120)
 
     def on_remove(self):
-        os.system('pkill mpg123')
+        subprocess.Popen(["pkill", "mpg123"])

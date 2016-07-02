@@ -13,7 +13,7 @@ at = AnimThread()
 at.start()
 # at.add(ShotAnim(1))
 
-options = {'test'    : lambda: at.add(TestAnim(random.randint(0, 0xFFFFFF))),
+options = {'test'    : lambda: at.add(TestAnim(random.randint(0, 0xFFFFFF), 2)),
            'shot1'   : lambda: at.add(ShotAnim(1)),
            'shot2'   : lambda: at.add(ShotAnim(2)),
            'shot3'   : lambda: at.add(ShotAnim(3)),
