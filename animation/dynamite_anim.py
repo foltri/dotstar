@@ -42,7 +42,7 @@ class DynamiteAnim(Animation):
 
                 AnimThread.strip.set_color(x, r1, g1, b1)
 
-            AnimThread.strip.strip.show()
+            AnimThread.strip.strip.show() # flag kene inkabb es egyutt kikuldeni a cuccot, ha egyszerre t0bb animnak van due frame-je
             self.next_time = self.progress + random.randint(50, 120)
 
     def on_remove(self):
