@@ -28,6 +28,11 @@ try:
 
         if m:
             print(m)
+
+            if m == "exit":
+                stream.close()
+                break
+
             options.get(m)()
         # atmo_dotstar.gunShot(3)
         #     elif m == 'gatling':

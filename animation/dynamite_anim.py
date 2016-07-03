@@ -12,6 +12,7 @@ class DynamiteAnim(Animation):
     def __init__(self):
         super(DynamiteAnim, self).__init__(-1)
         self.next_time = random.randint(50, 120)
+        self.priority = 1
 
     def animate(self):
         if self.progress % 2420 == 0:
@@ -42,8 +43,11 @@ class DynamiteAnim(Animation):
 
                 AnimThread.strip.set_color(x, r1, g1, b1)
 
-            AnimThread.strip.strip.show() # flag kene inkabb es egyutt kikuldeni a cuccot, ha egyszerre t0bb animnak van due frame-je
+            # AnimThread.strip.strip.show() # flag kene inkabb es egyutt kikuldeni a cuccot, ha egyszerre t0bb animnak van due frame-je
             self.next_time = self.progress + random.randint(50, 120)
+            self.is_frame_to_send = True
+        else:
+            self.is_frame_to_send = False
 
     def on_remove(self):
         subprocess.Popen(["pkill", "mpg123"])

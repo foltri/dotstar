@@ -17,6 +17,8 @@ class Animation(object):
         self.duration    = duration
         self.progress    = 0
         self.is_finished = False
+        self.is_frame_to_send = False
+        self.priority = 2
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
@@ -26,6 +28,7 @@ class Animation(object):
             self.progress += 1
         else:
             self.is_finished = True
+            # return False # no frame to send this time
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
