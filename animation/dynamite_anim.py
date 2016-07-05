@@ -13,6 +13,8 @@ class DynamiteAnim(Animation):
     def __init__(self, root):
         super(DynamiteAnim, self).__init__(root, duration=-1, priority=1)
         self.next_time = 10
+        self.colors = []
+
 
     def animate(self):
         if self.progress % self.TNT2_MP3_LENGTH == 0:
@@ -22,6 +24,7 @@ class DynamiteAnim(Animation):
         g = 97  # getGreen(bgColor)   #97
         b = 0  # getBlue(bgColor)    #0
 
+        self.colors = []
         if self.progress == self.next_time:
             for i in range(0, Strip.NUMPIXELS):
                 flicker = random.randint(0, 8)  # 16)  # random(0, 150);
@@ -41,12 +44,16 @@ class DynamiteAnim(Animation):
                 if b1 < 0:
                     b1 = 0
 
-                self.root.STRIP.set_color(i, r1, g1, b1)
+                self.colors.append((r1,g1,b1))
 
             self.next_time = self.progress + 50 #random.randint(50, 120)
-            self.is_frame_to_send = True
-        else:
-            self.is_frame_to_send = False
+
+
+        for i, color in enumerate(self.colors):
+            self.root.STRIP.set_color(i, color[0], color[1], color[2])
+
+        self.is_frame_to_send = True
+
 
     def on_remove(self):
         # TODO: get subprocess ID and kill process with that

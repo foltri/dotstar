@@ -18,11 +18,11 @@ class TestAnim(Animation):
 
         if self.progress == self.next_time:
             self.counter += 1
-            self.root.STRIP.set_color_range(start_pos + radius - self.counter, start_pos + radius + self.counter, self.color)
             self.next_time = self.progress + 500
-            self.is_frame_to_send = True
-        else:
-            self.is_frame_to_send = False
+
+        self.root.STRIP.set_color_range(start_pos + radius - self.counter, start_pos + radius + self.counter, self.color)
+        self.is_frame_to_send = True
+
 
 
 
