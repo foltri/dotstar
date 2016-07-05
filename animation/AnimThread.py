@@ -4,10 +4,11 @@ from Queue import Queue, Empty, PriorityQueue
 import time
 
 from animation.ArrowAnim import ArrowAnim
+from animation.BeerAnim import BeerAnim
 from animation.ShotAnim import ShotAnim
 from animation.Strip import Strip
 from animation.TestAnim import TestAnim
-from animation.dynamite_anim import DynamiteAnim
+from animation.DynamiteAnim import DynamiteAnim
 
 class AnimThread:
 
@@ -26,6 +27,10 @@ class AnimThread:
             'arrow2': lambda: ArrowAnim(self, 2),
             'arrow3': lambda: ArrowAnim(self, 3),
             'arrow4': lambda: ArrowAnim(self, 4),
+            'beer1': lambda: BeerAnim(self, 1),
+            'beer2': lambda: BeerAnim(self, 2),
+            'beer3': lambda: BeerAnim(self, 3),
+            'beer4': lambda: BeerAnim(self, 4),
             'test' : lambda : TestAnim(self)
         }
 
@@ -49,8 +54,17 @@ class AnimThread:
                     print command
                     if command == "tnt_on":
                         local_data["tnt"] = DynamiteAnim(self)
+
                     elif command == "tnt_off":
                         local_data["tnt"].is_finished = True
+
+                    elif command == "gatling1" or "gatling2" or "gatling3" or "gatling4":
+                        d = 0
+                        player = command[-1]
+                        for p in range(1,5):
+                            if not p == int(player):
+                                local_data["{}{}".format(command[:7], str(p))] = ShotAnim(self, p, delay=d)
+                                d += 200
                     else:
                         local_data[command] = self.ANIMS[command]()
                 except Empty:

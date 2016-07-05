@@ -47,9 +47,19 @@ class Strip(object):
             self.strip.setPixelColor(pos, r)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    def set_color_range(self, start, end, color):
+    def set_color_range(self, start, end, r, g=None, b=None):
         for i in range(start, end):
-            self.strip.setPixelColor(i, color)
+
+            if i > (Strip.NUMPIXELS):
+                i -= (Strip.NUMPIXELS)
+            elif i < 0:
+                i += (Strip.NUMPIXELS)
+
+            if (g is not None and
+                        b is not None):
+                self.strip.setPixelColor(i, r, g, b)
+            else:
+                self.strip.setPixelColor(i, r)
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def set_brightness(self, brightness):

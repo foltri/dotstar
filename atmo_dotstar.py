@@ -283,14 +283,7 @@ def arrowShot(player):
 
 def beerDrink(player):
     beerColor = setRGB(19, 8, 0)
-    # setRGB(236,97,0)
-    # 0xec6100
 
-    # p = player + 1
-    # if p > numplayers - 1: p = 0
-
-    start1 = getPlayerStartLed(player) + (playerPixelRange // 2)
-    start2 = getPlayerStartLed(player)
     start3 = getPlayerStartLed(player) + playerPixelRange
 
     length = playerPixelRange * 3

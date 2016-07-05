@@ -3,9 +3,9 @@ from animation.Animation import Animation
 from animation.Strip import Strip
 
 
-class ShotAnim(Animation):
-    def __init__(self, root, player, delay=0):
-        super(ShotAnim, self).__init__(root, duration=-1)
+class GatlingAnim(Animation):
+    def __init__(self, root, player):
+        super(GatlingAnim, self).__init__(root, duration=-1)
         self.color = 0xff0000
         self.player = player
         self.next_time = 0
@@ -15,9 +15,8 @@ class ShotAnim(Animation):
         self.counter = 0
         self.counter1 = self.radius
         self.step = "flash"
-        self.next_time = delay
+        self.next_time = 0
         self.cnt = 0
-
 
     def animate(self):
 
