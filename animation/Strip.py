@@ -57,3 +57,7 @@ class Strip(object):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def show(self):
         self.strip.show()
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+    def getPlayerStartLed(self, player):
+        return self.PLAYER_PIXEL_RANGE * (player - 1)

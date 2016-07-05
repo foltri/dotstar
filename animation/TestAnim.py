@@ -9,7 +9,7 @@ class TestAnim(Animation):
         self.color = 0xff0000
         self.player = 2
         self.counter = 0
-        self.next_time = 10
+        self.next_time = 0
 
     def animate(self):
 

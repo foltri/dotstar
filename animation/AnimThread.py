@@ -40,7 +40,7 @@ class AnimThread:
 
                 # van uj command?
                 try:
-                    command = self._message_pool.get(timeout=0.01)
+                    command = self._message_pool.get(timeout=0.002)
                     print command
                     if command == "tnt_on":
                         local_data["tnt"] = DynamiteAnim(self)
@@ -72,5 +72,5 @@ class AnimThread:
                 self.is_bg_set = True
                 self.STRIP.show()
 
-            time.sleep(0.01)
+            time.sleep(0.005)
 

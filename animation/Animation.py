@@ -20,6 +20,7 @@ class Animation(object):
         self.is_finished      = False
         self.is_frame_to_send = False
         self.priority         = priority
+        self.next_time = 0
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
@@ -40,3 +41,8 @@ class Animation(object):
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def on_remove(self):
         pass
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+    # delay must be divisible by 5
+    def setDelay(self, delay):
+        self.next_time = self.progress + delay
