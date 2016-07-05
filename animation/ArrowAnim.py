@@ -3,10 +3,10 @@ from animation.Animation import Animation
 from animation.Strip import Strip
 
 
-class ShotAnim(Animation):
+class ArrowAnim(Animation):
     def __init__(self, root, player):
-        super(ShotAnim, self).__init__(root, duration=-1)
-        self.color = 0xff0000
+        super(ArrowAnim, self).__init__(root, duration=-1)
+        self.color = 0xd628da
         self.player = player
         self.next_time = 0
 
@@ -14,45 +14,40 @@ class ShotAnim(Animation):
         self.radius = Strip.NUMPIXELS // 8
         self.counter = 0
         self.counter1 = self.radius
-        self.step = "flash"
-        self.next_time = 0
+        self.step = "from_center"
         self.cnt = 0
 
     def animate(self):
 
-        # os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
-        # setDelay(50)
+        # indianColor = 0xd628da
+        #
+        # start = playerPixelRange * player + playerPixelRange // 2
+        #
+        # os.system('mpg123 -q testimages/indian_scream2.mp3 &')
+        # setPixelRange([start], playerPixelRange, indianColor, delay=15, type='fromCenter')
+        # setDelay(1500)
+        #
+        # setPixelRange([start], playerPixelRange, bgColor, delay=15, type='fromEnds')
+
 
         if self.progress >= self.next_time:
-            if self.step == "flash":
-                self.root.STRIP.set_brightness(50)
-                self.setDelay(20)
-                self.step = "flash1"
-            elif self.step == "flash1":
-                self.root.STRIP.set_brightness(225)
-                self.setDelay(20)
-                self.step = "flash2"
-            elif self.step == "flash2":
-                self.root.STRIP.set_brightness(Strip.BRIGHTNESS)
-                self.setDelay(100)
-                self.step = "from_center"
-
-            elif self.step == "from_center":
+            if self.step == "from_center":
                 # kozeprol ki (180ms)
                 if self.counter <= self.radius:
                     self.counter += 1
                     self.cnt = self.counter
                     # self.next_time = self.progress + 5
-                    self.setDelay(5)
+                    self.setDelay(15)
                 else:
                     self.step = "from_ends"
-                    self.setDelay(400)
+                    self.setDelay(1500)
 
             elif self.step == "from_ends":
                 # kintrol vissza
+                # if self.progress >= 480:
                 self.counter1 -= 1
                 self.cnt = self.counter1
-                self.setDelay(90)
+                self.setDelay(15)
 
                 if self.counter1 <= 0:
                     self.is_finished = True

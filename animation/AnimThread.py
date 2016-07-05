@@ -3,6 +3,7 @@ from threading import Thread
 from Queue import Queue, Empty, PriorityQueue
 import time
 
+from animation.ArrowAnim import ArrowAnim
 from animation.ShotAnim import ShotAnim
 from animation.Strip import Strip
 from animation.TestAnim import TestAnim
@@ -21,6 +22,10 @@ class AnimThread:
             'shot2': lambda: ShotAnim(self, 2),
             'shot3': lambda: ShotAnim(self, 3),
             'shot4': lambda: ShotAnim(self, 4),
+            'arrow1': lambda: ArrowAnim(self, 1),
+            'arrow2': lambda: ArrowAnim(self, 2),
+            'arrow3': lambda: ArrowAnim(self, 3),
+            'arrow4': lambda: ArrowAnim(self, 4),
             'test' : lambda : TestAnim(self)
         }
 
