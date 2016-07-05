@@ -52,7 +52,40 @@ class ArrowAnim(Animation):
                 if self.counter1 <= 0:
                     self.is_finished = True
 
-        self.root.STRIP.set_color_range(self.start_pos + self.radius - self.cnt, self.start_pos + self.radius + self.cnt, self.color)
-        self.root.STRIP.set_color_range(self.start_pos -1, self.start_pos + self.radius - self.cnt, Strip.DEFAULT_COLOR)
-        self.root.STRIP.set_color_range(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1, Strip.DEFAULT_COLOR)
+        p14 = self.start_pos + self.radius - self.cnt + 18
+        p25 = self.start_pos + self.radius + self.cnt + 18
+        p3 = self.start_pos - 1 + 18
+        p6 = self.start_pos + 2 * self.radius + 1 + 18
+
+
+
+        if self.player == 4:
+            if p14 > (Strip.NUMPIXELS - 1):
+                p14 -= (Strip.NUMPIXELS - 1)
+            elif p14 < 0:
+                p14 += (Strip.NUMPIXELS - 1)
+
+            if p25 > (Strip.NUMPIXELS - 1):
+                p25 -= (Strip.NUMPIXELS - 1)
+            elif p25 < 0:
+                p25 += (Strip.NUMPIXELS - 1)
+
+            if p3 > (Strip.NUMPIXELS - 1):
+                p3 -= (Strip.NUMPIXELS - 1)
+            elif p3 < 0:
+                p3 += (Strip.NUMPIXELS - 1)
+
+            if p6 > (Strip.NUMPIXELS - 1):
+                p6 -= (Strip.NUMPIXELS - 1)
+            elif p6 < 0:
+                p6 += (Strip.NUMPIXELS - 1)
+            self.root.STRIP.set_color_range(p14, 144, self.color)
+            self.root.STRIP.set_color_range(0, p25, self.color)
+            self.root.STRIP.set_color_range(p3, p14, Strip.DEFAULT_COLOR)
+            self.root.STRIP.set_color_range(p25, p6, Strip.DEFAULT_COLOR)
+        else:
+            self.root.STRIP.set_color_range(p14, p25, self.color)
+            self.root.STRIP.set_color_range(p3, p14, Strip.DEFAULT_COLOR)
+            self.root.STRIP.set_color_range(p25, p6, Strip.DEFAULT_COLOR)
+
         self.is_frame_to_send = True

@@ -57,7 +57,8 @@ class ShotAnim(Animation):
                 if self.counter1 <= 0:
                     self.is_finished = True
 
+
         self.root.STRIP.set_color_range(self.start_pos + self.radius - self.cnt, self.start_pos + self.radius + self.cnt, self.color)
-        self.root.STRIP.set_color_range(self.start_pos -1, self.start_pos + self.radius - self.cnt, Strip.DEFAULT_COLOR)
+        self.root.STRIP.set_color_range(self.start_pos - 1, self.start_pos + self.radius - self.cnt, Strip.DEFAULT_COLOR)
         self.root.STRIP.set_color_range(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1, Strip.DEFAULT_COLOR)
         self.is_frame_to_send = True
