@@ -1,5 +1,5 @@
 from animation.Animation import Animation
-from animation.AnimThread import AnimThread
+from animation.AnimThread_old import AnimThread
 
 
 class BeerAnim(Animation):

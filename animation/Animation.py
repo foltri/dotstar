@@ -13,22 +13,23 @@ class Animation(object):
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    def __init__(self, duration):
-        self.duration    = duration
-        self.progress    = 0
-        self.is_finished = False
+    def __init__(self, root, duration, priority=2):
+        self.root             = root
+        self.duration         = duration
+        self.progress         = 0
+        self.is_finished      = False
         self.is_frame_to_send = False
-        self.priority = 2
+        self.priority         = priority
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def tick(self):
-        if self.duration == -1 or self.progress < self.duration:
-            self.animate()
-            self.progress += 1
+        if (self.duration == -1 or
+            self.progress < self.duration):
+                self.animate()
+                self.progress += 10
         else:
             self.is_finished = True
-            # return False # no frame to send this time
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #

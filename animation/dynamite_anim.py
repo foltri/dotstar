@@ -3,19 +3,19 @@ import random
 
 import subprocess
 
-from animation.AnimThread import AnimThread
 from animation.Animation import Animation
 from animation.Strip import Strip
 
 
 class DynamiteAnim(Animation):
-    def __init__(self):
-        super(DynamiteAnim, self).__init__(-1)
-        self.next_time = random.randint(50, 120)
-        self.priority = 1
+    TNT2_MP3_LENGTH = 2420
+
+    def __init__(self, root):
+        super(DynamiteAnim, self).__init__(root, duration=-1, priority=1)
+        self.next_time = 10
 
     def animate(self):
-        if self.progress % 2420 == 0:
+        if self.progress % self.TNT2_MP3_LENGTH == 0:
             subprocess.Popen(["mpg123", "-q", "testimages/tnt2.mp3"])
 
         r = 236  # getRed(bgColor)     #236
@@ -23,8 +23,8 @@ class DynamiteAnim(Animation):
         b = 0  # getBlue(bgColor)    #0
 
         if self.progress == self.next_time:
-            for x in range(0, Strip.NUMPIXELS):  # (int x = 8; x < 99; x++)
-                flicker = random.randint(0, 8)  # 16)             # random(0, 150);
+            for i in range(0, Strip.NUMPIXELS):
+                flicker = random.randint(0, 8)  # 16)  # random(0, 150);
                 if flicker == 0:
                     r1 = 0
                     g1 = 0
@@ -41,13 +41,14 @@ class DynamiteAnim(Animation):
                 if b1 < 0:
                     b1 = 0
 
-                AnimThread.strip.set_color(x, r1, g1, b1)
+                self.root.STRIP.set_color(i, r1, g1, b1)
 
-            # AnimThread.strip.strip.show() # flag kene inkabb es egyutt kikuldeni a cuccot, ha egyszerre t0bb animnak van due frame-je
-            self.next_time = self.progress + random.randint(50, 120)
+            self.next_time = self.progress + 50 #random.randint(50, 120)
             self.is_frame_to_send = True
         else:
             self.is_frame_to_send = False
 
     def on_remove(self):
+        # TODO: get subprocess ID and kill process with that
         subprocess.Popen(["pkill", "mpg123"])
+

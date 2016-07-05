@@ -40,8 +40,8 @@ class Strip(object):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def set_color(self, pos, r, g=None, b=None):
         if (g is not None and
-                    b is not None):
-            self.strip.setPixelColor(pos, r, g, b)
+            b is not None):
+                self.strip.setPixelColor(pos, r, g, b)
         else:
             self.strip.setPixelColor(pos, r)
 
@@ -53,7 +53,6 @@ class Strip(object):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def set_brightness(self, brightness):
         self.strip.setBrightness(brightness)
-        self.strip.show()
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def show(self):

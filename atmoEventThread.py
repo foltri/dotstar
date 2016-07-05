@@ -13,10 +13,11 @@ import server
 class AtmoEventStream:
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    def __init__(self):
+    def __init__(self, message_pool):
         # initialize the video camera stream and read the first frame
         # from the stream
         self.stream = server
+        self._message_pool = message_pool
 
         # self.message = self.stream.receive()
 
@@ -40,7 +41,8 @@ class AtmoEventStream:
                 return self.stream.close()
 
             # otherwise, read the next frame from the stream
-            self.message = self.stream.receive()
+            self._message_pool.put(self.stream.receive())
+
             # print('NEW')
             self.unread = True
 
