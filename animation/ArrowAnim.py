@@ -1,4 +1,7 @@
 from __future__ import division
+
+import os
+
 from animation.Animation import Animation
 from animation.Strip import Strip
 
@@ -16,6 +19,7 @@ class ArrowAnim(Animation):
         self.counter1 = self.radius
         self.step = "from_center"
         self.cnt = 0
+        self.is_first_run = True
 
     def animate(self):
 
@@ -28,6 +32,10 @@ class ArrowAnim(Animation):
         # setDelay(1500)
         #
         # setPixelRange([start], playerPixelRange, bgColor, delay=15, type='fromEnds')
+
+        if self.is_first_run:
+            os.system('mpg123 -q testimages/indian_scream2.mp3 &')
+            self.is_first_run = False
 
 
         if self.progress >= self.next_time:

@@ -10,8 +10,8 @@ except ImportError:
 # ------------------------------------------------------------------------------#
 class Strip(object):
     DEFAULT_COLOR = 0xec6100
-    BRIGHTNESS = 200
-    BRIGHTNESS = 60
+    BRIGHTNESS = 120
+    # BRIGHTNESS = 60
     NUMPIXELS = 144  # Number of LEDs in strip
     NUMPLAYERS = 4
     PLAYER_PIXEL_RANGE = NUMPIXELS // NUMPLAYERS

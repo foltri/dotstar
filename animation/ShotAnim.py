@@ -1,4 +1,7 @@
 from __future__ import division
+
+import os
+
 from animation.Animation import Animation
 from animation.Strip import Strip
 
@@ -17,12 +20,15 @@ class ShotAnim(Animation):
         self.step = "flash"
         self.next_time = delay
         self.cnt = 0
+        self.is_first_run = True
 
 
     def animate(self):
 
-        # os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
-        # setDelay(50)
+        if self.is_first_run:
+            os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
+            self.is_first_run = False
+            # setDelay(50)
 
         if self.progress >= self.next_time:
             if self.step == "flash":

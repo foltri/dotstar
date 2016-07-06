@@ -58,7 +58,8 @@ class AnimThread:
                     elif command == "tnt_off":
                         local_data["tnt"].is_finished = True
 
-                    elif command == "gatling1" or "gatling2" or "gatling3" or "gatling4":
+                    elif command[:7] == "gatling":
+                        print "gg"
                         d = 0
                         player = command[-1]
                         for p in range(1,5):
@@ -66,6 +67,7 @@ class AnimThread:
                                 local_data["{}{}".format(command[:7], str(p))] = ShotAnim(self, p, delay=d)
                                 d += 200
                     else:
+                        print "else"
                         local_data[command] = self.ANIMS[command]()
                 except Empty:
                     break
