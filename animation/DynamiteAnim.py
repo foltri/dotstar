@@ -47,7 +47,7 @@ class DynamiteAnim(Animation):
 
                 self.colors.append((r1,g1,b1))
 
-            self.next_time = self.progress + 1000 #random.randint(50, 120)
+            self.next_time = self.progress + 30 #random.randint(50, 120)
 
 
         for i, color in enumerate(self.colors):

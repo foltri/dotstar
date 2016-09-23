@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 # Import python modules
-from threading import Thread
+import multiprocessing
 
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 # Import user modules
@@ -29,7 +29,12 @@ class AtmoEventStream:
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
     def start(self):
         # start the thread to read frames from the video stream
-        Thread(target=self.update, args=()).start()
+        # Thread(target=self.update, args=()).start()
+
+        thread = multiprocessing.Process(target=self.update, args=())
+        thread.daemon = False
+        thread.start()
+
 
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #

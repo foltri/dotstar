@@ -1,11 +1,13 @@
 from __future__ import division
+
+import multiprocessing
 import os
 from Queue import Queue
 
 import atmoEventThread
 from animation import AnimThread
 
-MESSAGE_POOL = Queue()
+MESSAGE_POOL = multiprocessing.Queue()
 
 ae = atmoEventThread.AtmoEventStream(MESSAGE_POOL)
 at = AnimThread.AnimThread(MESSAGE_POOL)

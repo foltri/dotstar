@@ -1,7 +1,6 @@
 import collections
 import subprocess
-from threading import Thread
-from Queue import Queue, Empty, PriorityQueue
+import Queue
 import time
 
 from animation.ArrowAnim import ArrowAnim
@@ -36,7 +35,8 @@ class AnimThread:
         }
 
     def start(self):
-        Thread(target=self.update, args=()).start()
+        # Thread(target=self.update, args=()).start()
+        self.update()
 
     def stop(self):
         self.is_running = False
@@ -48,11 +48,10 @@ class AnimThread:
             is_any_anim = False
 
             while True:
-                t = time.time()
-
+                # t  =time.time()
                 # van uj command?
                 try:
-                    command = self._message_pool.get(timeout=0.002)
+                    command = self._message_pool.get(block=False)
                     print command
                     if command == "tnt_on":
                         if local_data["tnt"] is None:
@@ -72,7 +71,7 @@ class AnimThread:
                                 d += 200
                     else:
                         local_data[command] = self.ANIMS[command]()
-                except Empty:
+                except Queue.Empty:
                     break
 
             for command, anim in local_data.items():
@@ -99,7 +98,7 @@ class AnimThread:
                 self.STRIP.show()
 
             # 1ms
-            print(t - time.time())
+            # print (t - time.time())
             time.sleep(0.001)
 
 
