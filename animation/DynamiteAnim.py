@@ -8,7 +8,7 @@ from animation.Strip import Strip
 
 
 class DynamiteAnim(Animation):
-    TNT2_MP3_LENGTH = 2420
+    TNT2_MP3_LENGTH = 1000
 
     def __init__(self, root):
         super(DynamiteAnim, self).__init__(root, duration=-1, priority=1)
@@ -25,6 +25,7 @@ class DynamiteAnim(Animation):
         b = 0  # getBlue(bgColor)    #0
 
         self.colors = []
+        # print("progress: {}, next: {}".format(self.progress,self.next_time))
         if self.progress == self.next_time:
             for i in range(0, Strip.NUMPIXELS):
                 flicker = random.randint(0, 8)  # 16)  # random(0, 150);
@@ -46,7 +47,7 @@ class DynamiteAnim(Animation):
 
                 self.colors.append((r1,g1,b1))
 
-            self.next_time = self.progress + 50 #random.randint(50, 120)
+            self.next_time = self.progress + 1000 #random.randint(50, 120)
 
 
         for i, color in enumerate(self.colors):

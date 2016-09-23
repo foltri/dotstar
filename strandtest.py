@@ -26,15 +26,15 @@ except ImportError:
 # End of DotStar_Emulator Changed Code
 # ##################################################
 
-numpixels = (8 * 8)  # Number of LEDs in strip
+numpixels = 288 #(8 * 8)  # Number of LEDs in strip
 
 # Here's how to control the strip from any two GPIO pins:
-datapin = 23
-clockpin = 24
-strip = Adafruit_DotStar(numpixels, datapin, clockpin)
+# datapin = 23
+# clockpin = 24
+# strip = Adafruit_DotStar(numpixels, datapin, clockpin)
 
 # Alternate ways of declaring strip:
-# strip   = Adafruit_DotStar(numpixels)           # Use SPI (pins 10=MOSI, 11=SCLK)
+strip   = Adafruit_DotStar(numpixels)           # Use SPI (pins 10=MOSI, 11=SCLK)
 # strip   = Adafruit_DotStar(numpixels, 32000000) # SPI @ ~32 MHz
 # strip   = Adafruit_DotStar()                    # SPI, No pixel buffer
 # strip   = Adafruit_DotStar(32000000)            # 32 MHz SPI, no pixel buf
@@ -55,7 +55,7 @@ while True:  # Loop forever
     strip.setPixelColor(head, color)  # Turn on 'head' pixel
     strip.setPixelColor(tail, 0)  # Turn off 'tail'
     strip.show()  # Refresh strip
-    time.sleep(1.0 / 50)  # Pause 20 milliseconds (~50 fps)
+    time.sleep(1.0 / 1000)  # Pause 20 milliseconds (~50 fps)
 
     head += 1  # Advance head position
     if head >= numpixels:  # Off end of strip?

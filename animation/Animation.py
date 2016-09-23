@@ -28,7 +28,7 @@ class Animation(object):
         if (self.duration == -1 or
             self.progress < self.duration):
                 self.animate()
-                self.progress += 10
+                self.progress += 1
         else:
             self.is_finished = True
 
@@ -43,6 +43,6 @@ class Animation(object):
         pass
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    # delay must be divisible by 5
+    # delay must be divisible by 1
     def setDelay(self, delay):
         self.next_time = self.progress + delay

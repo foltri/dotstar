@@ -1,4 +1,5 @@
 import collections
+import subprocess
 from threading import Thread
 from Queue import Queue, Empty, PriorityQueue
 import time
@@ -47,19 +48,22 @@ class AnimThread:
             is_any_anim = False
 
             while True:
+                t = time.time()
 
                 # van uj command?
                 try:
                     command = self._message_pool.get(timeout=0.002)
                     print command
                     if command == "tnt_on":
-                        local_data["tnt"] = DynamiteAnim(self)
+                        if local_data["tnt"] is None:
+                            local_data["tnt"] = DynamiteAnim(self)
 
                     elif command == "tnt_off":
-                        local_data["tnt"].is_finished = True
+                        if local_data["tnt"] is not None:
+                            local_data["tnt"].is_finished = True
+                            subprocess.Popen(["pkill", "mpg123"])
 
                     elif command[:7] == "gatling":
-                        print "gg"
                         d = 0
                         player = command[-1]
                         for p in range(1,5):
@@ -67,7 +71,6 @@ class AnimThread:
                                 local_data["{}{}".format(command[:7], str(p))] = ShotAnim(self, p, delay=d)
                                 d += 200
                     else:
-                        print "else"
                         local_data[command] = self.ANIMS[command]()
                 except Empty:
                     break
@@ -89,9 +92,14 @@ class AnimThread:
                     self.STRIP.show()
 
             elif not self.is_bg_set:
+            # else:
                 self.STRIP.set_color_range(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
+                self.STRIP.set_color_range2(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
                 self.is_bg_set = True
                 self.STRIP.show()
 
-            time.sleep(0.005)
+            # 1ms
+            print(t - time.time())
+            time.sleep(0.001)
+
 

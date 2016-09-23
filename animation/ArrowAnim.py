@@ -23,16 +23,6 @@ class ArrowAnim(Animation):
 
     def animate(self):
 
-        # indianColor = 0xd628da
-        #
-        # start = playerPixelRange * player + playerPixelRange // 2
-        #
-        # os.system('mpg123 -q testimages/indian_scream2.mp3 &')
-        # setPixelRange([start], playerPixelRange, indianColor, delay=15, type='fromCenter')
-        # setDelay(1500)
-        #
-        # setPixelRange([start], playerPixelRange, bgColor, delay=15, type='fromEnds')
-
         if self.is_first_run:
             os.system('mpg123 -q testimages/indian_scream2.mp3 &')
             self.is_first_run = False
@@ -44,15 +34,12 @@ class ArrowAnim(Animation):
                 if self.counter <= self.radius:
                     self.counter += 1
                     self.cnt = self.counter
-                    # self.next_time = self.progress + 5
                     self.setDelay(15)
                 else:
                     self.step = "from_ends"
-                    self.setDelay(1500)
+                    self.setDelay(700)
 
             elif self.step == "from_ends":
-                # kintrol vissza
-                # if self.progress >= 480:
                 self.counter1 -= 1
                 self.cnt = self.counter1
                 self.setDelay(15)
@@ -64,7 +51,6 @@ class ArrowAnim(Animation):
         p25 = self.start_pos + self.radius + self.cnt + 18
         p3 = self.start_pos - 1 + 18
         p6 = self.start_pos + 2 * self.radius + 1 + 18
-
 
         self.root.STRIP.set_color_range(p14, p25, self.color)
         self.root.STRIP.set_color_range(p3, p14, Strip.DEFAULT_COLOR)
