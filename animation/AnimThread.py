@@ -50,6 +50,8 @@ class AnimThread:
     def update(self):
         while True:
             t = time.time()
+            self.is_frames_to_send = False
+            self.is_any_anim = False
             while True:
                 try:
                     command = self._message_pool.get(block=False)
