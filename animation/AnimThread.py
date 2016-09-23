@@ -2,6 +2,7 @@ import collections
 import subprocess
 import Queue
 import time
+import Timer
 
 from animation.ArrowAnim import ArrowAnim
 from animation.BeerAnim import BeerAnim
@@ -9,6 +10,7 @@ from animation.ShotAnim import ShotAnim
 from animation.Strip import Strip
 from animation.TestAnim import TestAnim
 from animation.DynamiteAnim import DynamiteAnim
+
 
 class AnimThread:
 
@@ -18,6 +20,9 @@ class AnimThread:
         self.is_running    = True
         self.is_bg_set     = False
         self._message_pool = message_pool
+        self.is_frames_to_send = False
+        self.is_any_anim = False
+        self.local_data = collections.OrderedDict([('tnt', None)])
         self.ANIMS = {
             'shot1': lambda: ShotAnim(self, 1),
             'shot2': lambda: ShotAnim(self, 2),
@@ -36,30 +41,26 @@ class AnimThread:
 
     def start(self):
         # Thread(target=self.update, args=()).start()
+        # Timer.Timer(0.001, self.update).run()
         self.update()
 
     def stop(self):
         self.is_running = False
 
     def update(self):
-        local_data = collections.OrderedDict([('tnt', None)])
-        while self.is_running:
-            is_frames_to_send = False
-            is_any_anim = False
-
+        while True:
+            t = time.time()
             while True:
-                # t  =time.time()
-                # van uj command?
                 try:
                     command = self._message_pool.get(block=False)
                     print command
                     if command == "tnt_on":
-                        if local_data["tnt"] is None:
-                            local_data["tnt"] = DynamiteAnim(self)
+                        if self.local_data["tnt"] is None:
+                            self.local_data["tnt"] = DynamiteAnim(self)
 
                     elif command == "tnt_off":
-                        if local_data["tnt"] is not None:
-                            local_data["tnt"].is_finished = True
+                        if self.local_data["tnt"] is not None:
+                            self.local_data["tnt"].is_finished = True
                             subprocess.Popen(["pkill", "mpg123"])
 
                     elif command[:7] == "gatling":
@@ -67,38 +68,40 @@ class AnimThread:
                         player = command[-1]
                         for p in range(1,5):
                             if not p == int(player):
-                                local_data["{}{}".format(command[:7], str(p))] = ShotAnim(self, p, delay=d)
+                                self.local_data["{}{}".format(command[:7], str(p))] = ShotAnim(self, p, delay=d)
                                 d += 200
                     else:
-                        local_data[command] = self.ANIMS[command]()
+                        self.local_data[command] = self.ANIMS[command]()
                 except Queue.Empty:
                     break
 
-            for command, anim in local_data.items():
+            for command, anim in self.local_data.items():
                 try:
                     if not anim.is_finished:
                         anim.tick()
-                        is_frames_to_send = is_frames_to_send or anim.is_frame_to_send
-                        is_any_anim = True
+                        self.is_frames_to_send = self.is_frames_to_send or anim.is_frame_to_send
+                        self.is_any_anim = True
                     else:
-                        local_data[command] = None
+                        self.local_data[command] = None
                 except AttributeError:
                     pass
 
-            if is_any_anim:
+            if self.is_any_anim:
                 self.is_bg_set = False
-                if is_frames_to_send:
+                if self.is_frames_to_send:
                     self.STRIP.show()
 
             elif not self.is_bg_set:
-            # else:
                 self.STRIP.set_color_range(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
                 self.STRIP.set_color_range2(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
                 self.is_bg_set = True
                 self.STRIP.show()
 
             # 1ms
-            # print (t - time.time())
-            time.sleep(0.001)
+            next = 0.002 - (time.time() - t)
+            if next > 0:
+                time.sleep(next)
+            else: print(next, len(self.local_data))
+
 
 

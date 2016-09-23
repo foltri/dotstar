@@ -28,7 +28,7 @@ class Animation(object):
         if (self.duration == -1 or
             self.progress < self.duration):
                 self.animate()
-                self.progress += 1
+                self.progress += 2
         else:
             self.is_finished = True
 
