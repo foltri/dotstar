@@ -2,7 +2,6 @@ import collections
 import subprocess
 import Queue
 import time
-import Timer
 
 from animation.ArrowAnim import ArrowAnim
 from animation.BeerAnim import BeerAnim
@@ -10,7 +9,7 @@ from animation.ShotAnim import ShotAnim
 from animation.Strip import Strip
 from animation.TestAnim import TestAnim
 from animation.DynamiteAnim import DynamiteAnim
-
+from animation.ExplosionAnim import ExplosionAnim
 
 class AnimThread:
 
@@ -21,7 +20,7 @@ class AnimThread:
         self.is_bg_set     = False
         self._message_pool = message_pool
         self.is_frames_to_send = False
-        self.is_any_anim = False
+        self.anims_in_progress = False
         self.local_data = collections.OrderedDict([('tnt', None)])
         self.ANIMS = {
             'shot1': lambda: ShotAnim(self, 1),
@@ -36,12 +35,11 @@ class AnimThread:
             'beer2': lambda: BeerAnim(self, 2),
             'beer3': lambda: BeerAnim(self, 3),
             'beer4': lambda: BeerAnim(self, 4),
+            'explosion': lambda: ExplosionAnim(self),
             'test' : lambda : TestAnim(self)
         }
 
     def start(self):
-        # Thread(target=self.update, args=()).start()
-        # Timer.Timer(0.001, self.update).run()
         self.update()
 
     def stop(self):
@@ -51,7 +49,7 @@ class AnimThread:
         while True:
             t = time.time()
             self.is_frames_to_send = False
-            self.is_any_anim = False
+            self.anims_in_progress = False
             while True:
                 try:
                     command = self._message_pool.get(block=False)
@@ -63,7 +61,7 @@ class AnimThread:
                     elif command == "tnt_off":
                         if self.local_data["tnt"] is not None:
                             self.local_data["tnt"].is_finished = True
-                            subprocess.Popen(["pkill", "mpg123"])
+                            # subprocess.Popen(["pkill", "mpg123"])
 
                     elif command[:7] == "gatling":
                         d = 0
@@ -73,7 +71,10 @@ class AnimThread:
                                 self.local_data["{}{}".format(command[:7], str(p))] = ShotAnim(self, p, delay=d)
                                 d += 200
                     else:
-                        self.local_data[command] = self.ANIMS[command]()
+                        try:
+                            self.local_data[command] = self.ANIMS[command]()
+                        except:
+                            print("{} is not a command".format(command))
                 except Queue.Empty:
                     break
 
@@ -82,13 +83,13 @@ class AnimThread:
                     if not anim.is_finished:
                         anim.tick()
                         self.is_frames_to_send = self.is_frames_to_send or anim.is_frame_to_send
-                        self.is_any_anim = True
+                        self.anims_in_progress = True
                     else:
                         self.local_data[command] = None
                 except AttributeError:
                     pass
 
-            if self.is_any_anim:
+            if self.anims_in_progress:
                 self.is_bg_set = False
                 if self.is_frames_to_send:
                     self.STRIP.show()
@@ -97,13 +98,15 @@ class AnimThread:
                 self.STRIP.set_color_range(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
                 self.STRIP.set_color_range2(0, Strip.NUMPIXELS, Strip.DEFAULT_COLOR)
                 self.is_bg_set = True
+                print("BG")
                 self.STRIP.show()
 
             # 1ms
             next = 0.002 - (time.time() - t)
             if next > 0:
                 time.sleep(next)
-            else: print(next, len(self.local_data))
+            else:
+                print(next, len(self.local_data))
 
 
 

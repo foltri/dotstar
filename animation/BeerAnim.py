@@ -20,20 +20,6 @@ class BeerAnim(Animation):
         self.cnt = 0
 
     def animate(self):
-
-        # beerColor = setRGB(19, 8, 0)
-        #
-        # start3 = getPlayerStartLed(player) + playerPixelRange
-        #
-        # length = playerPixelRange * 3
-        #
-        # setPixelRange([start3], length, beerColor, delay=15, type='fromCenter')
-        # setDelay(1500)
-        # os.system('mpg123 -q testimages/drinking2.mp3 &')
-        # setPixelRange([start3], length, bgColor, delay=25, type='fromEnds')
-        # os.system('mpg123 -q testimages/beer_wood.mp3 &')
-
-
         if self.progress >= self.next_time:
             if self.step == "from_center":
                 # kozeprol ki
@@ -50,13 +36,23 @@ class BeerAnim(Animation):
                 # kintrol vissza
                 self.counter1 -= 1
                 self.cnt = self.counter1
-                self.setDelay(25)
+                self.setDelay(5)
 
                 if self.counter1 <= 0:
                     self.is_finished = True
 
-
+        # strip bottom
         self.root.STRIP.set_color_range(self.start_pos + self.radius - self.cnt, self.start_pos + self.radius + self.cnt, self.color[0], self.color[1], self.color[2])
         self.root.STRIP.set_color_range(self.start_pos - 1, self.start_pos + self.radius - self.cnt, Strip.DEFAULT_COLOR)
         self.root.STRIP.set_color_range(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1, Strip.DEFAULT_COLOR)
+
+        # strip top
+        self.root.STRIP.set_color_range2(self.start_pos + self.radius - self.cnt,
+                                        self.start_pos + self.radius + self.cnt, self.color[0], self.color[1],
+                                        self.color[2])
+        self.root.STRIP.set_color_range2(self.start_pos - 1, self.start_pos + self.radius - self.cnt,
+                                        Strip.DEFAULT_COLOR)
+        self.root.STRIP.set_color_range2(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1,
+                                        Strip.DEFAULT_COLOR)
+
         self.is_frame_to_send = True

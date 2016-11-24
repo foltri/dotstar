@@ -3,7 +3,7 @@ import os
 import atmo_dotstar
 import pygame
 from pygame.locals import *
-import server
+import unity_server
 
 exit = False
 

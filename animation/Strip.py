@@ -9,7 +9,7 @@ except ImportError:
 
 # ------------------------------------------------------------------------------#
 class Strip(object):
-    DEFAULT_COLOR = 0xec6100
+    DEFAULT_COLOR = 0xec6100 #236 97 0
     BRIGHTNESS = 120
     # BRIGHTNESS = 60
     NUMPIXELS = 144  # Number of LEDs in strip
@@ -41,10 +41,18 @@ class Strip(object):
         self.strip.show()
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-    def set_color(self, pos, r, g=None, b=None):
+    def set_color2(self, pos, r, g=None, b=None):
         if (g is not None and
             b is not None):
                 self.strip.setPixelColor(pos, r, g, b)
+        else:
+            self.strip.setPixelColor(pos, r)
+
+    def set_color(self, pos, r, g=None, b=None):
+        pos += 144
+        if (g is not None and
+                    b is not None):
+            self.strip.setPixelColor(pos, r, g, b)
         else:
             self.strip.setPixelColor(pos, r)
 

@@ -27,7 +27,7 @@ class ShotAnim(Animation):
 
         if self.progress >= self.next_time:
             if self.is_first_run:
-                os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
+                # os.system('mpg123 -q testimages/shotgun-old_school-RA_The_Sun_God-1129942741.mp3 &')
                 self.is_first_run = False
 
             if self.step == "flash":
@@ -69,12 +69,11 @@ class ShotAnim(Animation):
         self.root.STRIP.set_color_range(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1, Strip.DEFAULT_COLOR)
 
         # 2nd strip
-        # self.root.STRIP.set_color_range2(self.start_pos + self.radius - self.cnt,
-        #                                 self.start_pos + self.radius + self.cnt, self.color)
-        # self.root.STRIP.set_color_range2(self.start_pos - 1, self.start_pos + self.radius - self.cnt,
-        #                                 Strip.DEFAULT_COLOR)
-        # self.root.STRIP.set_color_range(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1,
-        #                                 Strip.DEFAULT_COLOR)
-
+        self.root.STRIP.set_color_range2(self.start_pos + self.radius - self.cnt,
+                                        self.start_pos + self.radius + self.cnt, self.color)
+        self.root.STRIP.set_color_range2(self.start_pos - 1, self.start_pos + self.radius - self.cnt,
+                                        Strip.DEFAULT_COLOR)
+        self.root.STRIP.set_color_range2(self.start_pos + self.radius + self.cnt, self.start_pos + 2 * self.radius + 1,
+                                        Strip.DEFAULT_COLOR)
 
         self.is_frame_to_send = True

@@ -24,7 +24,8 @@ class ArrowAnim(Animation):
     def animate(self):
 
         if self.is_first_run:
-            os.system('mpg123 -q testimages/indian_scream2.mp3 &')
+            # os.system('mpg123 -q testimages/indian_scream2.mp3 &')
+            # os.system('mpg123 -q testimages/arrow_shot.mp3 &')
             self.is_first_run = False
 
 

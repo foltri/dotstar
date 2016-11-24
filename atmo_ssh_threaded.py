@@ -2,6 +2,7 @@ from __future__ import division
 
 import multiprocessing
 import os
+import unity_server as server
 from Queue import Queue
 
 import atmoEventThread
@@ -16,4 +17,5 @@ try:
     ae.start()
     at.start()
 except KeyboardInterrupt:
+    server.close()
     os._exit(0)
