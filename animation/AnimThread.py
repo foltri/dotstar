@@ -2,6 +2,7 @@ import collections
 import subprocess
 import Queue
 import time
+import unity_server as server
 
 from animation.ArrowAnim import ArrowAnim
 from animation.BeerAnim import BeerAnim
@@ -74,7 +75,12 @@ class AnimThread:
                         try:
                             self.local_data[command] = self.ANIMS[command]()
                         except:
-                            print("{} is not a command".format(command))
+                            if command == " ":
+                                server.close()
+                                print("server closed")
+                                break
+                            else:
+                                print("{} is not a command".format(command))
                 except Queue.Empty:
                     break
 
